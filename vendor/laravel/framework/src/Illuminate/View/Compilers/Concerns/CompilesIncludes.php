@@ -25,7 +25,7 @@ trait CompilesIncludes
     {
         $expression = $this->stripParentheses($expression);
 
-        return "<?php echo \$__env->make({$expression}, \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
+        return "<?php echo \$__env->make({$expression}, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
     }
 
     /**
@@ -38,32 +38,25 @@ trait CompilesIncludes
     {
         $expression = $this->stripParentheses($expression);
 
-        return "<?php if (\$__env->exists({$expression})) echo \$__env->make({$expression}, \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
+        return "<?php if (\$__env->exists({$expression})) echo \$__env->make({$expression}, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
     }
 
     /**
      * Compile the include-when statements into valid PHP.
      *
-     * @param  string  $expression
+     * @param string $expression
      * @return string
      */
     protected function compileIncludeWhen($expression)
     {
         $expression = $this->stripParentheses($expression);
 
-        return "<?php echo \$__env->renderWhen($expression, \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path'))); ?>";
-    }
+        preg_match('/ *(.*), *(.*)$/is', $expression, $matches);
 
-    /**
-     * Compile the include-first statements into valid PHP.
-     *
-     * @param  string  $expression
-     * @return string
-     */
-    protected function compileIncludeFirst($expression)
-    {
-        $expression = $this->stripParentheses($expression);
+        $when = trim($matches[1]);
 
-        return "<?php echo \$__env->first({$expression}, \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
+        $arguments = trim($matches[2]);
+
+        return "<?php if ({$when}) echo \$__env->make({$arguments}, array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
     }
 }

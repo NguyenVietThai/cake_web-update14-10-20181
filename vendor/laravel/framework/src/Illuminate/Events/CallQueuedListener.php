@@ -33,27 +33,6 @@ class CallQueuedListener implements ShouldQueue
     public $data;
 
     /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
-     */
-    public $tries;
-
-    /**
-     * The timestamp indicating when the job should timeout.
-     *
-     * @var int
-     */
-    public $timeoutAt;
-
-    /**
-     * The number of seconds the job can run before timing out.
-     *
-     * @var int
-     */
-    public $timeout;
-
-    /**
      * Create a new job instance.
      *
      * @param  string  $class
@@ -96,7 +75,7 @@ class CallQueuedListener implements ShouldQueue
      */
     protected function setJobInstanceIfNecessary(Job $job, $instance)
     {
-        if (in_array(InteractsWithQueue::class, class_uses_recursive($instance))) {
+        if (in_array(InteractsWithQueue::class, class_uses_recursive(get_class($instance)))) {
             $instance->setJob($job);
         }
 
@@ -144,17 +123,5 @@ class CallQueuedListener implements ShouldQueue
     public function displayName()
     {
         return $this->class;
-    }
-
-    /**
-     * Prepare the instance for cloning.
-     *
-     * @return void
-     */
-    public function __clone()
-    {
-        $this->data = array_map(function ($data) {
-            return is_object($data) ? clone $data : $data;
-        }, $this->data);
     }
 }

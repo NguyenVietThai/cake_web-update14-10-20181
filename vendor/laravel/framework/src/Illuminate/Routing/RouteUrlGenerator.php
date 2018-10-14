@@ -11,7 +11,7 @@ class RouteUrlGenerator
     /**
      * The URL generator instance.
      *
-     * @var \Illuminate\Routing\UrlGenerator
+     * @param  \Illuminate\Routing\UrlGenerator
      */
     protected $url;
 
@@ -83,8 +83,7 @@ class RouteUrlGenerator
         // will need to throw the exception to let the developers know one was not given.
         $uri = $this->addQueryString($this->url->format(
             $root = $this->replaceRootParameters($route, $domain, $parameters),
-            $this->replaceRouteParameters($route->uri(), $parameters),
-            $route
+            $this->replaceRouteParameters($route->uri(), $parameters)
         ), $parameters);
 
         if (preg_match('/\{.*?\}/', $uri)) {
@@ -97,13 +96,7 @@ class RouteUrlGenerator
         $uri = strtr(rawurlencode($uri), $this->dontEncode);
 
         if (! $absolute) {
-            $uri = preg_replace('#^(//|[^/?])+#', '', $uri);
-
-            if ($base = $this->request->getBaseUrl()) {
-                $uri = preg_replace('#^'.$base.'#i', '', $uri);
-            }
-
-            return '/'.ltrim($uri, '/');
+            return '/'.ltrim(str_replace($root, '', $uri), '/');
         }
 
         return $uri;
@@ -118,7 +111,7 @@ class RouteUrlGenerator
      */
     protected function getRouteDomain($route, &$parameters)
     {
-        return $route->getDomain() ? $this->formatDomain($route, $parameters) : null;
+        return $route->domain() ? $this->formatDomain($route, $parameters) : null;
     }
 
     /**
@@ -131,7 +124,7 @@ class RouteUrlGenerator
     protected function formatDomain($route, &$parameters)
     {
         return $this->addPortToDomain(
-            $this->getRouteScheme($route).$route->getDomain()
+            $this->getRouteScheme($route).$route->domain()
         );
     }
 
@@ -147,9 +140,9 @@ class RouteUrlGenerator
             return 'http://';
         } elseif ($route->httpsOnly()) {
             return 'https://';
+        } else {
+            return $this->url->formatScheme(null);
         }
-
-        return $this->url->formatScheme();
     }
 
     /**
@@ -219,9 +212,9 @@ class RouteUrlGenerator
                 return Arr::pull($parameters, $m[1]);
             } elseif (isset($this->defaultParameters[$m[1]])) {
                 return $this->defaultParameters[$m[1]];
+            } else {
+                return $m[0];
             }
-
-            return $m[0];
         }, $path);
     }
 
@@ -261,7 +254,7 @@ class RouteUrlGenerator
             return '';
         }
 
-        $query = Arr::query(
+        $query = http_build_query(
             $keyed = $this->getStringParameters($parameters)
         );
 

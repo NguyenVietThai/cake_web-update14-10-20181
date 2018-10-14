@@ -23,7 +23,9 @@ class ArrayStore extends TaggableStore implements Store
      */
     public function get($key)
     {
-        return $this->storage[$key] ?? null;
+        if (array_key_exists($key, $this->storage)) {
+            return $this->storage[$key];
+        }
     }
 
     /**
@@ -48,8 +50,7 @@ class ArrayStore extends TaggableStore implements Store
      */
     public function increment($key, $value = 1)
     {
-        $this->storage[$key] = ! isset($this->storage[$key])
-                ? $value : ((int) $this->storage[$key]) + $value;
+        $this->storage[$key] = ((int) $this->storage[$key]) + $value;
 
         return $this->storage[$key];
     }

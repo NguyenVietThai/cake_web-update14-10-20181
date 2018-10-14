@@ -101,7 +101,7 @@ class Factory implements FactoryContract
      * Get the evaluated view contents for the given view.
      *
      * @param  string  $path
-     * @param  \Illuminate\Contracts\Support\Arrayable|array   $data
+     * @param  array   $data
      * @param  array   $mergeData
      * @return \Illuminate\Contracts\View\View
      */
@@ -118,7 +118,7 @@ class Factory implements FactoryContract
      * Get the evaluated view contents for the given view.
      *
      * @param  string  $view
-     * @param  \Illuminate\Contracts\Support\Arrayable|array   $data
+     * @param  array   $data
      * @param  array   $mergeData
      * @return \Illuminate\Contracts\View\View
      */
@@ -136,47 +136,6 @@ class Factory implements FactoryContract
         return tap($this->viewInstance($view, $path, $data), function ($view) {
             $this->callCreator($view);
         });
-    }
-
-    /**
-     * Get the first view that actually exists from the given list.
-     *
-     * @param  array  $views
-     * @param  \Illuminate\Contracts\Support\Arrayable|array   $data
-     * @param  array   $mergeData
-     * @return \Illuminate\Contracts\View\View
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function first(array $views, $data = [], $mergeData = [])
-    {
-        $view = Arr::first($views, function ($view) {
-            return $this->exists($view);
-        });
-
-        if (! $view) {
-            throw new InvalidArgumentException('None of the views in the given array exist.');
-        }
-
-        return $this->make($view, $data, $mergeData);
-    }
-
-    /**
-     * Get the rendered content of the view based on a given condition.
-     *
-     * @param  bool  $condition
-     * @param  string  $view
-     * @param  \Illuminate\Contracts\Support\Arrayable|array   $data
-     * @param  array   $mergeData
-     * @return string
-     */
-    public function renderWhen($condition, $view, $data = [], $mergeData = [])
-    {
-        if (! $condition) {
-            return '';
-        }
-
-        return $this->make($view, $this->parseData($data), $mergeData)->render();
     }
 
     /**
@@ -242,7 +201,7 @@ class Factory implements FactoryContract
      *
      * @param  string  $view
      * @param  string  $path
-     * @param  \Illuminate\Contracts\Support\Arrayable|array  $data
+     * @param  array  $data
      * @return \Illuminate\Contracts\View\View
      */
     protected function viewInstance($view, $path, $data)
@@ -271,14 +230,14 @@ class Factory implements FactoryContract
      * Get the appropriate view engine for the given path.
      *
      * @param  string  $path
-     * @return \Illuminate\Contracts\View\Engine
+     * @return \Illuminate\View\Engines\EngineInterface
      *
      * @throws \InvalidArgumentException
      */
     public function getEngineFromPath($path)
     {
         if (! $extension = $this->getExtension($path)) {
-            throw new InvalidArgumentException("Unrecognized extension in file: {$path}");
+            throw new InvalidArgumentException("Unrecognized extension in file: $path");
         }
 
         $engine = $this->extensions[$extension];

@@ -3,8 +3,8 @@
 			<div class="row">
 				<div class="col-sm-3">
 					<div class="widget">
-						<h4 class="widget-title">Instagram Feed</h4>
-						<div id="beta-instagram-feed"><div></div></div>
+						<h4 class="widget-title">Facebook</h4>
+						<div>NguyenVietThai</div>
 					</div>
 				</div>
 				<div class="col-sm-2">
@@ -12,12 +12,9 @@
 						<h4 class="widget-title">Information</h4>
 						<div>
 							<ul>
-								<li><a href="blog_fullwidth_2col.html"><i class="fa fa-chevron-right"></i> Web Design</a></li>
-								<li><a href="blog_fullwidth_2col.html"><i class="fa fa-chevron-right"></i> Web development</a></li>
-								<li><a href="blog_fullwidth_2col.html"><i class="fa fa-chevron-right"></i> Marketing</a></li>
-								<li><a href="blog_fullwidth_2col.html"><i class="fa fa-chevron-right"></i> Tips</a></li>
-								<li><a href="blog_fullwidth_2col.html"><i class="fa fa-chevron-right"></i> Resources</a></li>
-								<li><a href="blog_fullwidth_2col.html"><i class="fa fa-chevron-right"></i> Illustrations</a></li>
+								<li><a><i class="fa fa-chevron-right"></i> Hedspi-K60</a></li>
+								<li><a><i class="fa fa-chevron-right"></i> Lap trinh Web</a></li>
+								<li><a><i class="fa fa-chevron-right"></i> NguyenVietThai</a></li>
 							</ul>
 						</div>
 					</div>
@@ -29,8 +26,8 @@
 						<div>
 							<div class="contact-info">
 								<i class="fa fa-map-marker"></i>
-								<p>Hanoi: +84969243xxx</p>
-								<p>242 xa Dan</p>
+								<p>242 xa Dan,Phuong Lien, Dong Da, Phone: 0969243103</p>
+								<p>Dai hoc Bach Khoa Ha Noi</p>
 							</div>
 						</div>
 					</div>
@@ -39,9 +36,9 @@
 				<div class="col-sm-3">
 					<div class="widget">
 						<h4 class="widget-title">Newsletter Subscribe</h4>
-						<form action="#" method="post">
+						<form>
 							<input type="email" name="your_email">
-							<button class="pull-right" type="submit">Subscribe <i class="fa fa-chevron-right"></i></button>
+							<a><button class="pull-right">Subscribe <i class="fa fa-chevron-right"></i></button></a>
 						</form>
 					</div>
 				</div>
@@ -50,7 +47,7 @@
 	</div> <!-- #footer -->
 	<div class="copyright">
 		<div class="container">
-			<p class="pull-left">Complete at (&copy;) Oct 9 2018</p>
+			<p class="pull-left">Project in (&copy;) 2017</p>
 			<p class="pull-right pay-options">
 				<a href="#"><img src="source/assets/dest/images/pay/master.jpg" alt="" /></a>
 				<a href="#"><img src="source/assets/dest/images/pay/pay.jpg" alt="" /></a>

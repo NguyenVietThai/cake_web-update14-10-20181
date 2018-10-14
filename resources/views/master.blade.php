@@ -3,9 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAKE</title>
-    <link rel="icon" href="source/assets/dest/images/logo-cake.png">
-    <base href="{{asset('')}}">
+	<title>Cake </title>
+	<base href="{{asset('')}}">
 	<link href='http://fonts.googleapis.com/css?family=Dosis:300,400' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
@@ -19,12 +18,12 @@
 </head>
 <body>
 
-	@include('header')
+		@include('header')
 	<div class="rev-slider">
-    @yield('content')
+		@yield('content')
 	</div> <!-- .container -->
-
-	@include('footer')
+		@include('footer')
+	
 
 
 	<!-- include js files -->
@@ -51,6 +50,7 @@
 				$(".header-bottom").removeClass('fixNav')
 			}}
 		)
+		
 	})
 	</script>
 </body>

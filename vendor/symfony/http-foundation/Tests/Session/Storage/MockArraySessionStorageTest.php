@@ -12,9 +12,9 @@
 namespace Symfony\Component\HttpFoundation\Tests\Session\Storage;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
-use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 /**
  * Test class for MockArraySessionStorage.
@@ -48,7 +48,7 @@ class MockArraySessionStorageTest extends TestCase
         $this->data = array(
             $this->attributes->getStorageKey() => array('foo' => 'bar'),
             $this->flashes->getStorageKey() => array('notice' => 'hello'),
-        );
+            );
 
         $this->storage = new MockArraySessionStorage();
         $this->storage->registerBag($this->flashes);
@@ -95,30 +95,6 @@ class MockArraySessionStorageTest extends TestCase
         $this->assertEquals('', $this->storage->getId());
         $this->storage->start();
         $this->assertNotEquals('', $this->storage->getId());
-    }
-
-    public function testClearClearsBags()
-    {
-        $this->storage->clear();
-
-        $this->assertSame(array(), $this->storage->getBag('attributes')->all());
-        $this->assertSame(array(), $this->storage->getBag('flashes')->peekAll());
-    }
-
-    public function testClearStartsSession()
-    {
-        $this->storage->clear();
-
-        $this->assertTrue($this->storage->isStarted());
-    }
-
-    public function testClearWithNoBagsStartsSession()
-    {
-        $storage = new MockArraySessionStorage();
-
-        $storage->clear();
-
-        $this->assertTrue($storage->isStarted());
     }
 
     /**
